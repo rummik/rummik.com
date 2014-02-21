@@ -1,0 +1,100 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>~rummik</title>
+
+<div class="content"></div>
+
+<script id="github" type="text/html+tmpl">
+<i class="fa fa-github"></i>
+
+<% var ref = (typeof org != 'undefined') ? org : actor %>
+<!--<a href="<%= ref.url %>"><img src="<%= ref.avatar_url %>" class="avatar"></a>-->
+
+<% if (type == 'PushEvent') { %>
+	Pushed <%= payload.commits.length %> commit<%= payload.commits.length != 1 ? 's' : '' %>
+	to branch <%= payload.ref.replace(/^\w+\/\w+\//g, '') %> on
+<% } %>
+
+<% if (type == 'DeleteEvent') { %>
+	Deleted <%= payload.ref_type %> "<%= payload.ref %>" on
+<% } %>
+
+<% if (type == 'WatchEvent') { %>
+	Starred
+<% } %>
+
+<% if (type == 'ForkEvent') { %>
+	Forked <a href="<%= payload.forkee.html_url %>"><%= payload.forkee.full_name %></a> from
+<% } %>
+
+<% if (type == 'CreateEvent') { %>
+	Created <%= payload.ref_type %>
+	<% if (payload.ref_type != 'repository') { %>
+		<%= payload.ref %> on
+	<% } %>
+<% } %>
+
+<a href="<%= repo.url %>"><%= repo.name %></a>
+</script>
+
+<style>
+html, body, .content {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+.content {
+	width: 520px;
+}
+
+.event .avatar {
+	width: 1em;
+	height: 1em;
+	vertical-align: top;
+}
+</style>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+
+<script>
+(function() {
+'use strict';
+
+var xhr = new XMLHttpRequest();
+var content = document.querySelector('.content');
+var template = {};
+
+_.templateSettings.escape = /<%=([\s\S]+?)%>/g;
+_.templateSettings.interpolate = /<%-([\s\S]+?)%>/g;
+
+_.each(document.querySelectorAll('script[type="text/html+tmpl"]'), function(self) {
+	console.log('Parsing template: "' + self.id + '"');
+	template[self.id] = _.template(self.innerHTML);
+});
+
+xhr.open('get', 'https://api.github.com/users/rummik/events/public');
+xhr.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+
+xhr.onreadystatechange = function() {
+	if (xhr.readyState != 4 || xhr.status != 200)
+		return;
+
+	var data = JSON.parse(xhr.responseText);
+
+	_.each(data, function(event) {
+		var div = document.createElement('div');
+		div.className = 'event github github-' + event.type.toLowerCase();
+		div.innerHTML = template['github'](event);
+		content.appendChild(div);
+
+		console.log(event);
+	});
+};
+
+xhr.send();
+
+})();
+</script>
+
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
