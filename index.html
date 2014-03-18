@@ -1,84 +1,46 @@
 <!doctype html>
 <meta charset=utf-8>
-<title>~rummik</title>
+<title>~rummik/</title>
 
-<div class="content"></div>
-<div class="info">
-	<a href="https://twitter.com/rummik">
-		<i class="fa fa-twitter"></i> Twitter
-	</a>
+<div class="content">
+	<div class="profile">
+		<img src="https://secure.gravatar.com/avatar/970cf49bc983bc884c37a29710260aa9?s=128" alt=">;3" width="128" height="128">
+<!--
+		<ul class="profile-text">
+			<li class="location"><i class="fa fa-location-arrow"></i></a>
+			<li class="hire"><i class="fa fa-info"></i></a>
+			<li class="contact"><i class="fa fa-info"></i></a>
+		</ul>
 
-	<a href="https://github.com/rummik">
-		<i class="fa fa-github"></i> GitHub
-	</a>
+		<div class="links">
+			<a href="https://twitter.com/iotasamurai">
+				<i class="fa fa-twitter"></i> Twitter
+			</a>
 
-	<a href="https://www.gittip.com/rummik">
-		<i class="fa fa-gittip"></i> Gittip
-	</a>
+			<a href="https://github.com/rummik">
+				<i class="fa fa-github-alt"></i> GitHub
+			</a>
 
-	<a href="#" download="ssh-authorized_keys.txt" class="ssh-keys">
-		<i class="fa fa-laptop"></i> SSH keys
-	</a>
+			<a href="https://www.gittip.com/rummik">
+				<i class="fa fa-gittip"></i> Gittip
+			</a>
+
+			<a href="#" download="ssh-authorized_keys.txt" class="ssh-keys">
+				<i class="fa fa-terminal"></i> SSH keys
+			</a>
+		</div>
+		-->
+	</div>
+
+	<div class="zenosphere"></div>
 </div>
 
-<script id="github" type="text/html+tmpl">
-<i class="fa fa-github"></i>
-
-<% var ref = (typeof org != 'undefined') ? org : actor %>
-<!--<a href="<%= ref.url %>"><img src="<%= ref.avatar_url %>" class="avatar"></a>-->
-
-<%- template['github-' + type.toLowerCase()](arguments[0]) %>
-</script>
-
-<script id="github-pushevent" type="text/html+tmpl">
-<i class="octicon octicon-repo-push"></i>
-Pushed <%= payload.size %> commit<%= payload.commits.length != 1 ? 's' : '' %>
-to branch <%= payload.ref.replace(/^\w+\/\w+\//g, '') %> on
-<a href="<%= repo.url %>"><%= repo.name %></a>
-</script>
-
-<script id="github-deleteevent" type="text/html+tmpl">
-<i class="octicon octicon-<%= ({ branch: 'git-branch-delete', tag: 'tag-remove' })[payload.ref_type] %>"></i>
-Deleted <%= payload.ref_type %> "<%= payload.ref %>" on
-<a href="<%= repo.url %>"><%= repo.name %></a>
-</script>
-
-<script id="github-pullrequestevent" type="text/html+tmpl">
-Pull request for <a href="<%= repo.url %>/branches/<%= payload.pull_request.head.ref %>"></a>
-<%= payload.action %> on <a href="<%= repo.url %>"><%= repo.name %></a>
-payload.pull_request.url
-<% console.log(arguments[0]) %>
-</script>
-
-<script id="github-forkevent" type="text/html+tmpl">
-<i class="octicon octicon-repo-forked"></i>
-<a href="<%= repo.url %>"><%= repo.name %></a> →
-<a href="<%= payload.forkee.html_url %>"><%= payload.forkee.full_name %></a>
-</script>
-
-<script id="github-watchevent" type="text/html+tmpl">
-<i class="octicon octicon-star-add"></i>
-Starred <a href="<%= repo.url %>"><%= repo.name %></a>
-</script>
-
-<script id="github-createevent" type="text/html+tmpl">
-<i class="octicon octicon-<%= ({ repository: 'repo-create', branch: 'git-branch-create', tag: 'tag-add' })[payload.ref_type] %>"></i>
-Created <%= payload.ref_type %>
-<% if (payload.ref_type != 'repository') { %> <%= payload.ref %> on <% } %>
-<a href="<%= repo.url %>"><%= repo.name %></a>
-</script>
-
-<!--
-<script id="github-" type="text/html+tmpl">
-<a href="<%= repo.url %>"><%= repo.name %></a>
-</script>
--->
-
 <style>
-html, body, .content {
+html, body {
 	margin: 0;
 	padding: 0;
 	height: 100%;
+	background: #fff;
 }
 
 a {
@@ -86,21 +48,13 @@ a {
 	text-decoration: none;
 }
 
-.info {
-	position: fixed;
-	top: 5px;
-	right: 10px;
+.content {
+	width: 800px;
+	margin: 0 auto;
 }
 
-.event .avatar {
-	width: 1em;
-	height: 1em;
-	vertical-align: top;
-}
-
-.info a {
+.links a {
 	padding: 0 5px;
-	margin-bottom: 5px;
 	border: 2px solid transparent;
 	border-top: 0;
 	border-bottom: 0;
@@ -108,12 +62,45 @@ a {
 	display: block;
 }
 
-.info a:hover {
+.links a:hover {
 	border-color: #ff6639;
+}
+
+.profile {
+	overflow: hidden;
+	border-bottom: 1px solid #000;
+	padding: 1em 0;
+	line-height: 128px;
+}
+
+.profile img {
+	margin: 0 calc(((200px - 128px) - 0.7em) / 2);
+	float: left;
+}
+
+.profile ul, .profile div {
+	display: inline-block;
+	line-height: 1.2em;
+	vertical-align: bottom;
+}
+
+.profile ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.profile ul, .profile div {
+	width: 290px;
+}
+
+.zenosphere > a {
+	border-top: 1px solid #000;
 }
 </style>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
+<script src="bower_components/zenosphere/dist/zenosphere.js"></script>
 
 <script>
 (function() {
@@ -122,53 +109,58 @@ a {
 function get(url, callback) {
 	var xhr = new XMLHttpRequest();
 
-	xhr.open('get', 'https://api.github.com/' + url);
-	xhr.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+	xhr.open('get', url);
 
 	xhr.onreadystatechange = function() {
 		if (xhr.readyState == 4 && xhr.status == 200)
 			callback(JSON.parse(xhr.responseText));
 	};
 
-	xhr.send();
+	setTimeout(xhr.send.bind(xhr), 0);
+
+	return xhr;
 }
 
-var content = document.querySelector('.content');
-var template = _.templateSettings.imports.template = {};
+function getGH(endpoint, callback) {
+	var xhr = get('https://api.github.com/' + endpoint, callback);
+	xhr.setRequestHeader('Accept', 'application/vnd.github.v3+json');
+}
 
-_.templateSettings.escape = /<%=([\s\S]+?)%>/g;
-_.templateSettings.interpolate = /<%-([\s\S]+?)%>/g;
-
-_.each(document.querySelectorAll('script[type="text/html+tmpl"]'), function(self) {
-	console.log('Parsing template: "' + self.id + '"');
-	template[self.id] = _.template(self.innerHTML);
+getGH('users/rummik', function(rummik) {
+	console.log(rummik);
 });
 
-var page = 1;
-get('users/rummik/events/public', function events(data) {
-	_.each(data, function(event) {
-		var type = event.type.toLowerCase();
-
-		if (typeof template['github-' + type] == 'undefined')
-			return console.log('Unknown GitHub event:', event);
-
-		var div = document.createElement('div');
-		div.className = 'event github github-' + type;
-		div.innerHTML = template['github'](event);
-		content.appendChild(div);
-	});
-
-	if (data.length == 30 && page < 10)
-		get('users/rummik/events/public?page=' + (++page), events);
-});
-
-get('users/rummik/keys', function(data) {
+getGH('users/rummik/keys', function(data) {
 	document.querySelector('.ssh-keys').href = 'data:text/plain;base64,' + btoa(_.pluck(data, 'key').join('\n'));
-	console.log('SSH keys:', data);
 });
+
+new Zenosphere({
+	element: '.zenosphere',
+	streams: [
+		{
+			type: 'GitHub',
+			stream: 'users/rummik', // user/:user or orgs/:org
+		},
+		{
+			type: 'Twitter',
+			stream: '396025623727992832',
+		},
+		{
+			type: 'Lastfm',
+			stream: 'rummik',
+		},
+	],
+});
+
+(function refreshAvatar() {
+	var img = document.querySelector('.profile > img');
+	img.src = img.src.replace(/&\d+$/, '') + '&' + Date.now();
+	setTimeout(refreshAvatar, 5 * 60 * 1000);
+})();
 
 })();
 </script>
 
-<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-<link href="//rummik.github.io/octicon/octicons.min.css" rel="stylesheet">
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+<link rel="stylesheet" href="http://rummik.github.io/octicon/octicons.min.css">
+<link rel="stylesheet" href="bower_components/zenosphere/dist/zenosphere.css">
