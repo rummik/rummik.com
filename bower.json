@@ -2,6 +2,6 @@
   "name": "rummik.com",
   "private": true,
   "dependencies": {
-    "zenosphere": "~0.4.3"
+    "zenosphere": "~0.4.4"
   }
 }
