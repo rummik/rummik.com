@@ -5,7 +5,7 @@
 
 <div class="content">
 	<div class="profile">
-		<img src="https://secure.gravatar.com/avatar/970cf49bc983bc884c37a29710260aa9?s=128" alt=">;3" width="128" height="128">
+		<img src="https://secure.gravatar.com/avatar/970cf49bc983bc884c37a29710260aa9?s=500" alt=">;3">
 
 		<h1>~rummik</h1>
 
@@ -85,6 +85,8 @@ a {
 .profile img {
 	float: left;
 	margin-right: 20px;
+	width: 128px;
+	height: 128px;
 }
 
 .profile h1 {
@@ -159,18 +161,57 @@ a {
 	border-top: 1px solid #471f0e;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 500px) {
 	.content {
 		width: auto;
 	}
 
+	.content h1 {
+		display: none;
+	}
+
 	.profile img {
-		width: 64px;
-		height: 64px;
+		width: 100%;
+		height: auto;
 	}
 
 	.profile ul {
+		text-align: justify;
+		width: 100%;
+		line-height: 0;
+	}
+
+	.profile ul:after {
+		display: inline-block;
+		content: "";
+		width: 100%;
+	}
+
+	.profile ul li {
+		display: inline-block;
+		float: none;
 		width: auto;
+		margin-top: 10px;
+	}
+
+	.profile ul li a {
+		display: inline-block;
+		overflow: hidden;
+		font-size: 2.5em;
+		width: 1em;
+		height: 1em;
+		line-height: 1em;
+	}
+
+	.profile ul li i {
+		width: 100%;
+		height: 100%;
+		display: inline-block;
+		text-align: center;
+	}
+
+	.profile .funding {
+		display: none;
 	}
 
 	.zenosphere .message {
@@ -178,7 +219,7 @@ a {
 	}
 
 	.profile {
-		padding-bottom: 3.2em;
+		padding-bottom: 10px;
 	}
 }
 </style>
